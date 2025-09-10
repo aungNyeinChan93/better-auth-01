@@ -8,7 +8,7 @@ export default function RegisterForm() {
   const [state, formAction] = useActionState(registerAction, undefined);
 
   if (state?.success) {
-    return redirect("/");
+    return redirect("/login");
   }
 
   return (
