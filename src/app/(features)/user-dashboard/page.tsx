@@ -4,7 +4,10 @@ import { getUserDetailByEmail } from "@/features/users/users-helper";
 import React from "react";
 
 const UserDashboard = async () => {
+  // session
   const session = await getAuthSession();
+
+  // authuser
   const authUserDetail =
     session && (await getUserDetailByEmail(session?.user?.email));
   console.log({ authUserDetail });
@@ -17,7 +20,7 @@ const UserDashboard = async () => {
           Welcome back,
           <strong className="text-red-400 text-xl font-semibold tracking-wider capitalize">
             {" "}
-            {session?.user?.name ?? "unknown"}
+            {session?.user?.name ?? authUserDetail?.email ?? "unknown"}
           </strong>{" "}
           👋
         </h1>

@@ -1,6 +1,6 @@
 "use client";
 
-import { registerAction } from "@/features/auth/auth-actions";
+import { loginWithSocial, registerAction } from "@/features/auth/auth-actions";
 import { redirect } from "next/navigation";
 import { useActionState } from "react";
 
@@ -61,18 +61,21 @@ export default function RegisterForm() {
         <div className="my-4 text-center text-gray-500">OR</div>
 
         {/* Social logins */}
-        <button
-          //   onClick={() => signIn("github", { callbackUrl: "/" })}
-          className="mb-2 w-full rounded-lg bg-gray-800 p-2 text-white hover:bg-gray-900"
-        >
-          Continue with GitHub
-        </button>
-        <button
-          //   onClick={() => signIn("google", { callbackUrl: "/" })}
-          className="w-full rounded-lg bg-red-500 p-2 text-white hover:bg-red-600"
-        >
-          Continue with Google
-        </button>
+        <form action="">
+          <button
+            type="submit"
+            formAction={() => loginWithSocial("github")}
+            className="mb-2 w-full rounded-lg bg-gray-800 p-2 text-white hover:bg-gray-900"
+          >
+            Continue with GitHub
+          </button>
+          <button
+            //   onClick={() => signIn("google", { callbackUrl: "/" })}
+            className="w-full rounded-lg bg-red-500 p-2 text-white hover:bg-red-600"
+          >
+            Continue with Google
+          </button>
+        </form>
       </div>
     </div>
   );

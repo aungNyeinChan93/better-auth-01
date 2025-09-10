@@ -67,3 +67,17 @@ export const logoutAction = async () => {
     }
     return redirect('/login', RedirectType.replace);
 }
+
+// login with github
+export const loginWithSocial = async (provider: 'github' | 'google') => {
+    const { url } = await auth.api.signInSocial({
+        body: {
+            provider,
+            callbackURL: '/'
+        }
+    });
+    if (!url) {
+        return redirect('/register', RedirectType.push)
+    }
+    return redirect(url, RedirectType.replace)
+}
