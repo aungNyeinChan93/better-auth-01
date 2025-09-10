@@ -1,18 +1,41 @@
-// UserDashboard.tsx
+import { logoutAction } from "@/features/auth/auth-actions";
+import { getAuthSession } from "@/features/auth/auth-helper";
+import { getUserDetailByEmail } from "@/features/users/users-helper";
 import React from "react";
 
-const UserDashboard = () => {
+const UserDashboard = async () => {
+  const session = await getAuthSession();
+  const authUserDetail =
+    session && (await getUserDetailByEmail(session?.user?.email));
+  console.log({ authUserDetail });
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col mt-5 p-3 rounded-lg ">
       {/* Header */}
       <header className="bg-white shadow-md p-4 flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Welcome back, User 👋</h1>
+        <h1 className="text-xl font-semibold">
+          Welcome back,
+          <strong className="text-red-400 text-xl font-semibold tracking-wider capitalize">
+            {" "}
+            {session?.user?.name ?? "unknown"}
+          </strong>{" "}
+          👋
+        </h1>
         <div className="flex items-center space-x-4">
-          <img
+          {/* <img
             src="/next.svg"
             alt="avatar"
             className="w-10 h-10 rounded-full"
-          />
+          /> */}
+          <form>
+            <button
+              formAction={logoutAction}
+              type="submit"
+              className="text-xs underline underline-offset-4 decoration-indigo-400 hover:bg-red-400 rounded-2xl px-4 py-2 hover:text-white "
+            >
+              Sign Out
+            </button>
+          </form>
         </div>
       </header>
 

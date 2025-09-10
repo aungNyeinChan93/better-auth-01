@@ -5,7 +5,7 @@ import { success } from "better-auth";
 import { error } from "console";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 // register 
 export async function registerAction(initialState: any, formData: FormData) {
@@ -47,7 +47,8 @@ export const loginAction = async (initailState: any, formData: FormData) => {
     }
     try {
         const signInUser = await auth.api.signInEmail({
-            body: { email, password, callbackURL: '/' }
+            body: { email, password, callbackURL: '/' },
+            headers: await headers()
         })
         return { success: true, message: signInUser?.user.name };
 
@@ -60,6 +61,9 @@ export const loginAction = async (initailState: any, formData: FormData) => {
 
 // logout
 export const logoutAction = async () => {
-    await auth.api.signOut({ headers: await headers() })
-    return;
+    const { success } = await auth.api.signOut({ headers: await headers() })
+    if (!success) {
+        return;
+    }
+    return redirect('/login', RedirectType.replace);
 }

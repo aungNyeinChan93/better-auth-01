@@ -24,12 +24,20 @@ model Quote {
   @@map("quotes")
 }
 
+enum Role {
+  user
+  admin
+  super
+  owner
+}
+
 model User {
   id            String    @id
   name          String
   email         String
   emailVerified Boolean   @default(false)
   password      String?
+  role          Role?     @default(user)
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt

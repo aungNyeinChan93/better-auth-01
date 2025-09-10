@@ -9,4 +9,12 @@ export async function getAllUsers() {
         }
     })
     return users;
+};
+
+
+export async function getUserDetailByEmail(email: string | undefined) {
+    const user = await prisma.user.findUnique({
+        where: { email: email as string },
+    })
+    return user;
 }
